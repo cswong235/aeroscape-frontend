@@ -1,28 +1,71 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useRef, useState } from 'react'
 import { ENDPOINTS } from '../App'
 
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
+  // Store the token in local storage
   const [token, setToken] = useState(() => localStorage.getItem('token'))
+  const refreshPromise = useRef(null)
 
+  // When logging out, clear the tokens
   function logout() {
     localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
     setToken(null)
   }
 
-  async function apiFetch(url, options = {}) {
+  // Swap the refresh token for a new access token, returns null if that fails
+  async function refreshAccessToken() {
+    // Attempt to get the currently stored refreshToken
+    const refreshToken = localStorage.getItem('refreshToken')
+    if (!refreshToken) return null;
+
+    // If several requests get a 401 at once, they all wait on the same refresh
+    if (!refreshPromise.current) {
+      // Pass the refresh token to the backend to get a new access token
+      refreshPromise.current = fetch(ENDPOINTS.refresh, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refreshToken }),
+      })
+        .then((res) => (res.ok ? res.json() : null))
+        .then((body) => body?.accessToken ?? null)
+        .catch(() => null)
+        .finally(() => {
+          refreshPromise.current = null
+        });
+    };
+
+    const newToken = await refreshPromise.current;
+    if (newToken) {
+      localStorage.setItem('token', newToken);
+      setToken(newToken);
+    };
+    return newToken;
+  }
+
+  async function apiFetch(url, options = {}, retried = false) {
+    // Read from localStorage so a token refreshed by another request is picked up
+    const currentToken = localStorage.getItem('token')
     const res = await fetch(url, {
       ...options,
       headers: {
         'Content-Type': 'application/json',
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(currentToken ? { Authorization: `Bearer ${currentToken}` } : {}),
         ...options.headers,
       },
     })
+
+    // Access token expired: refresh it once and retry the original request
+    if (res.status === 401 && currentToken && !retried) {
+      const newToken = await refreshAccessToken()
+      if (newToken) return apiFetch(url, options, true)
+    }
+
     const body = await res.json().catch(() => ({}))
 
-    if (res.status === 401 && token) logout()
+    if (res.status === 401 && currentToken) logout()
     if (!res.ok) {
       const err = body.error?.message || body.error || body.message
       throw new Error(err || `Request failed (${res.status})`)
@@ -35,9 +78,10 @@ export function AuthProvider({ children }) {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     })
-    const newToken = data.token || data.access_token || data.session?.access_token
+    const newToken = data.accessToken
     if (!newToken) throw new Error('No token returned from /login')
     localStorage.setItem('token', newToken)
+    localStorage.setItem('refreshToken', data.refreshToken)
     setToken(newToken)
   }
 

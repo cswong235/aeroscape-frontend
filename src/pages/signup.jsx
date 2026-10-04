@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { Card, Form, Button, Alert } from 'react-bootstrap'
 import { useAuth } from '../context/login'
 
 export default function Signup() {
@@ -8,11 +9,13 @@ export default function Signup() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
 
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
+    if (password !== confirmPassword) return setError('Passwords do not match')
     try {
       await signup(email, password, username)
       navigate('/login')
@@ -22,14 +25,30 @@ export default function Signup() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Sign up</h1>
-      <p><input placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} /></p>
-      <p><input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required /></p>
-      <p><input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required /></p>
-      <button type="submit">Sign up</button>
-      {error && <p>{error}</p>}
-      <p>Have an account? <Link to="/login">Log in</Link></p>
-    </form>
+    <div className="aero-auth">
+      <Card className="aero-glass aero-auth-card">
+        <Card.Body>
+          <Form onSubmit={handleSubmit}>
+            <h1 className="aero-title aero-auth-title">Sign up</h1>
+            <p className="aero-auth-title">Your journey begins soon.</p>
+            <Form.Group className="mb-3">
+              <Form.Control className="aero-input" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Control className="aero-input" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Control className="aero-input" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Control className="aero-input" type="password" placeholder="Confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+            </Form.Group>
+            <Button type="submit" className="aero-btn aero-btn-block">Sign up</Button>
+            {error && <Alert variant="danger" className="aero-alert mt-3"><img src="../src/assets/error.png" alt="Error" height="40px" style={{ marginRight: "10px" }}/>{error}</Alert>}
+            <p className="aero-auth-switch">Have an account? <Link to="/login" className="aero-link">Log in</Link></p>
+          </Form>
+        </Card.Body>
+      </Card>
+    </div>
   )
 }
