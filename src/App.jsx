@@ -6,6 +6,7 @@ import Signup from './pages/signup'
 import Login from './pages/login'
 import Feed from './pages/feed'
 import Friends from './pages/friends'
+import NotFound from './pages/notFound'
 import './App.css';
 import logo from './assets/Aeroscape.png'
 
@@ -79,7 +80,8 @@ export default function App() {
               <Route path="/login" element={<GuestOnly><Login /></GuestOnly>} />
               <Route path="/feed" element={<RequireAuth><Feed /></RequireAuth>} />
               <Route path="/friends" element={<RequireAuth><Friends /></RequireAuth>} />
-              <Route path="*" element={<Navigate to="/feed" replace />} />
+              <Route path="/" element={<Navigate to="/feed" replace />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Container>
         </main>
