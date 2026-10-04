@@ -100,7 +100,7 @@ body {
 
 .aero-container {
   width: 100%;
-  max-width: 1080px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 1rem;
   box-sizing: border-box;
@@ -315,6 +315,23 @@ textarea.aero-input.form-control {
   text-align: center;
   font-style: italic;
   padding: 1rem 0;
+}
+
+.aero-loading-card .card-body {
+  padding: 2rem 1.4rem;
+}
+
+.aero-spinner.spinner-border {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--aero-sky);
+  filter: drop-shadow(0 0 6px rgba(76, 179, 238, 0.6));
+}
+
+.aero-loading-text {
+  color: var(--aero-ink);
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .aero-post-title.card-title {

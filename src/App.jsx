@@ -9,22 +9,18 @@ import Friends from './pages/friends'
 import './App.css';
 
 export const ENDPOINTS = {
-  // signup: `${API_URL}/signup`, // POST { email, password, username }
-  signup: 'http://localhost:3000/signup',
-  // login: `${API_URL}/login`, // POST { email, password } -> token
-  login: 'http://localhost:3000/login',
-  // POST { refreshToken } -> new access token
-  refresh: 'http://localhost:3000/refresh',
-  // posts: `${API_URL}/posts`, // GET public + friends' posts
-  posts: 'http://localhost:3000/posts',
-  // createPost: `${API_URL}/posts`, // POST { title, content, visibility } -> new post
-  createPost: 'http://localhost:3000/posts',
-  // users: `${API_URL}/users`, // GET all users
-  users: 'http://localhost:3000/users',
-  // friends: `${API_URL}/friends`, // POST { friend_id } -> follow a user
-  friends: 'http://localhost:3000/friendships',
-  getFriends: 'http://localhost:3000/friendships',
-  removeFriends: 'http://localhost:3000/friendships'
+  signup: 'https://aeroscape-backend.vercel.app/signup',
+  login: 'https://aeroscape-backend.vercel.app/login',
+  refresh: 'https://aeroscape-backend.vercel.app/refresh',
+
+  posts: 'https://aeroscape-backend.vercel.app/posts',
+  createPost: 'https://aeroscape-backend.vercel.app/posts',
+
+  users: 'https://aeroscape-backend.vercel.app/users',
+
+  friends: 'https://aeroscape-backend.vercel.app/friendships',
+  getFriends: 'https://aeroscape-backend.vercel.app/friendships',
+  removeFriends: 'https://aeroscape-backend.vercel.app/friendships'
 }
 
 function RequireAuth({ children }) {
