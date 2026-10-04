@@ -3,6 +3,7 @@ import { Card, ListGroup, Button, Alert } from 'react-bootstrap'
 import { useAuth } from '../context/login'
 import { ENDPOINTS } from '../App'
 import LoadingCard from '../components/LoadingCard'
+import errorIcon from '../assets/error.png'
 
 export default function Friends() {
   const { apiFetch } = useAuth();
@@ -61,7 +62,7 @@ export default function Friends() {
   return (
     <div>
       <h1 className="aero-title">Friends</h1>
-      {error && <Alert variant="danger" className="aero-alert"><img src="../src/assets/error.png" alt="Error" height="40px" style={{ marginRight: "10px" }}/>{error}</Alert>}
+      {error && <Alert variant="danger" className="aero-alert"><img src={errorIcon} alt="Error" height="40px" style={{ marginRight: "10px" }}/>{error}</Alert>}
       {loading ? (<LoadingCard text="Loading people..." />) : users.length === 0 ? (
           <Card className="aero-glass">
             <Card.Body>

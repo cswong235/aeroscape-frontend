@@ -7,6 +7,7 @@ import Login from './pages/login'
 import Feed from './pages/feed'
 import Friends from './pages/friends'
 import './App.css';
+import logo from './assets/Aeroscape.png'
 
 export const ENDPOINTS = {
   signup: 'https://aeroscape-backend.vercel.app/signup',
@@ -40,7 +41,7 @@ function Nav() {
       <Navbar sticky="top" className="aero-navbar">
         <Container className="aero-navbar-inner">
           <Navbar.Brand className="aero-brand">
-            <img src="/src/assets/Aeroscape.png" alt="Aeroscape" className="aero-logo" />
+            <img src={logo} alt="Aeroscape" className="aero-logo" />
           </Navbar.Brand>
           <div className="aero-nav-links">
             <Link to="/login" className="aero-nav-link">Login</Link>
@@ -54,7 +55,7 @@ function Nav() {
     <Navbar sticky="top" className="aero-navbar">
       <Container className="aero-navbar-inner">
         <Navbar.Brand className="aero-brand">
-          <img src="/src/assets/Aeroscape.png" alt="Aeroscape" className="aero-logo" />
+          <img src={logo} alt="Aeroscape" className="aero-logo" />
         </Navbar.Brand>
         <div className="aero-nav-links">
           <Link to="/feed" className="aero-nav-link">Feed</Link>

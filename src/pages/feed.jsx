@@ -3,6 +3,7 @@ import { Card, Form, Button, Alert, Row, Col } from 'react-bootstrap'
 import { useAuth } from '../context/login'
 import { ENDPOINTS } from '../App'
 import LoadingCard from '../components/LoadingCard'
+import errorIcon from '../assets/error.png'
 
 export default function Feed() {
   const { apiFetch } = useAuth()
@@ -85,7 +86,7 @@ export default function Feed() {
                     rows={4}
                   />
                 </Form.Group>
-                {error && <Alert variant="danger" className="aero-alert"><img src="../src/assets/error.png" alt="Error" height="40px" style={{ marginRight: "10px" }}/>{error}</Alert>}
+                {error && <Alert variant="danger" className="aero-alert"><img src={errorIcon} alt="Error" height="40px" style={{ marginRight: "10px" }}/>{error}</Alert>}
 
                 <hr />
 

@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Card, Form, Button, Alert } from 'react-bootstrap'
 import { useAuth } from '../context/login'
+import logo from '../assets/Aeroscape.png'
+import errorIcon from '../assets/error.png'
 
 export default function Login() {
   const { login } = useAuth()
@@ -26,7 +28,7 @@ export default function Login() {
       <Card className="aero-glass aero-auth-card">
         <Card.Body>
           <Form onSubmit={handleSubmit}>
-            <img src="../src/assets/Aeroscape.png" alt="Aeroscape logo" height="100px"/>
+            <img src={logo} alt="Aeroscape logo" height="100px"/>
             <hr/>
             <h1 className="aero-title aero-auth-title">Welcome.</h1>
             <Form.Group className="mb-3">
@@ -36,7 +38,7 @@ export default function Login() {
               <Form.Control className="aero-input" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </Form.Group>
             <Button type="submit" className="aero-btn aero-btn-block">Log in</Button>
-            {error && <Alert variant="danger" className="aero-alert mt-3"><img src="../src/assets/error.png" alt="Error" height="40px" style={{ marginRight: "10px" }}/>{error}</Alert>}
+            {error && <Alert variant="danger" className="aero-alert mt-3"><img src={errorIcon} alt="Error" height="40px" style={{ marginRight: "10px" }}/>{error}</Alert>}
             <p className="aero-auth-switch">No account? <Link to="/signup" className="aero-link">Sign up</Link></p>
           </Form>
         </Card.Body>

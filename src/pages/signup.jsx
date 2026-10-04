@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Card, Form, Button, Alert } from 'react-bootstrap'
 import { useAuth } from '../context/login'
+import errorIcon from '../assets/error.png'
 
 export default function Signup() {
   const { signup } = useAuth()
@@ -44,7 +45,7 @@ export default function Signup() {
               <Form.Control className="aero-input" type="password" placeholder="Confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
             </Form.Group>
             <Button type="submit" className="aero-btn aero-btn-block">Sign up</Button>
-            {error && <Alert variant="danger" className="aero-alert mt-3"><img src="../src/assets/error.png" alt="Error" height="40px" style={{ marginRight: "10px" }}/>{error}</Alert>}
+            {error && <Alert variant="danger" className="aero-alert mt-3"><img src={errorIcon} alt="Error" height="40px" style={{ marginRight: "10px" }}/>{error}</Alert>}
             <p className="aero-auth-switch">Have an account? <Link to="/login" className="aero-link">Log in</Link></p>
           </Form>
         </Card.Body>
