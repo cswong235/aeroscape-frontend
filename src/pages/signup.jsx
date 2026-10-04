@@ -33,7 +33,7 @@ export default function Signup() {
             <h1 className="aero-title aero-auth-title">Sign up</h1>
             <p className="aero-auth-title">Your journey begins soon.</p>
             <Form.Group className="mb-3">
-              <Form.Control className="aero-input" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+              <Form.Control className="aero-input" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required/>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Control className="aero-input" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
